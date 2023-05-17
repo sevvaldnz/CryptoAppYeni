@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/main_choose_contact_option"
+        android:title="Choose Contact"
+        app:showAsAction="never"
+        android:visible="true"
+
+        >
+
+    </item>
+
+    <item
+        android:id="@+id/main_settings_option"
+        android:title="Settings"
+        app:showAsAction="never"
+        android:visible="true"
+        >
+    </item>
+
+    <item
+        android:id="@+id/main_sign_out_option"
+        android:title="Sign Out"
+        app:showAsAction="never"
+        android:visible="true"
+        >
+
+    </item>
+
+</menu>
