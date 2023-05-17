@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+    <TextView
+        android:id="@+id/register_title"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="10dp"
+        android:padding="50dp"
+        android:text="REGISTER PAGE"
+        android:textStyle="bold"
+        android:textColor="#002E5D"
+        android:textSize="40sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:id="@+id/register_subtitle"
+        android:layout_below="@id/register_title"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:text="Enter your Email Address:"
+        android:textStyle="bold"
+        android:textColor="#800080"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/register_subtitle2"
+        android:layout_below="@id/register_email"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:text="Enter your Password:"
+        android:textStyle="bold"
+        android:textColor="#800080"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <EditText
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:id="@+id/register_email"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/inputs"
+        android:hint="Email address..."
+        android:inputType="textEmailAddress"
+        android:padding="10dp" />
+
+    <EditText
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_below="@id/register_email"
+        android:id="@+id/register_password"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/inputs"
+        android:hint="Password..."
+        android:inputType="textPassword"
+        android:padding="10dp" />
+
+    <TextView
+        android:id="@+id/register_passwordagain"
+        android:layout_below="@id/register_password"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:text="Enter your Password again:"
+        android:textStyle="bold"
+        android:textColor="#800080"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_below="@id/register_passwordagain"
+        android:id="@+id/register_password2"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/inputs"
+        android:hint="Password..."
+        android:inputType="textPassword"
+        android:padding="10dp" />
+
+    <Button
+        android:id="@+id/register_button"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="220dp"
+        android:layout_marginRight="30dp"
+        android:layout_below="@id/register_password2"
+        android:text="REGISTER"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/account"
+        android:layout_below="@id/register_button"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:text="SIGN IN"
+        android:textStyle="bold"
+        android:textColor="#002E5D"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+</RelativeLayout>
