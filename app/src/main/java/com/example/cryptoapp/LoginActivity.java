@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText loginmail,loginpassword;
     private TextView createnewaccount, forgotpassword;
 
-    private FirebaseUser mevcutKullanici;
+
     private FirebaseAuth mAuth;
 
     ProgressDialog signinDialog;
@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         signinDialog= new ProgressDialog(this);
 
         mAuth=FirebaseAuth.getInstance();
-        mevcutKullanici= mAuth.getCurrentUser();
+
 
 
         createnewaccount.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +92,9 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
                                 Intent mainPage = new Intent(LoginActivity.this,MainActivity.class);
+                                mainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(mainPage);
+                                finish();
                                 Toast.makeText(LoginActivity.this, "Successfully signed in", Toast.LENGTH_SHORT).show();
                                 signinDialog.dismiss();
                             }
@@ -108,14 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if(mevcutKullanici != null)
-        {
-            KullaniciyiAnaActivityeGonder();
-        }
-    }
+
 
     private void KullaniciyiAnaActivityeGonder() {
         Intent MainActivityIntent = new Intent(LoginActivity.this,MainActivity.class);

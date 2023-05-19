@@ -5,14 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     //Firebase
     private FirebaseUser mevcutKullanici;
     private FirebaseAuth mAuth;
+    private DatabaseReference UsersReference;
 
 
     @Override
@@ -44,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth=FirebaseAuth.getInstance();
         mevcutKullanici=mAuth.getCurrentUser();
+        UsersReference= FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -54,12 +63,41 @@ public class MainActivity extends AppCompatActivity {
         {
             KullaniciyiLoginActivityeGonder();
         }
+        else{
+            KullanicininVarliginiDogrula();
+        }
+    }
+
+    private void KullanicininVarliginiDogrula() {
+        String mevcutKullaniciId = mAuth.getCurrentUser().getUid();
+        UsersReference.child("Users").child(mevcutKullaniciId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if((snapshot.child("username").exists())){
+                    Toast.makeText(MainActivity.this, "Welcome", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Intent settings = new Intent(MainActivity.this,SettingsActivity.class);
+                    settings.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(settings);
+                    finish();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void KullaniciyiLoginActivityeGonder()
     {
         Intent LoginIntent = new Intent(MainActivity.this,LoginActivity.class);
+        LoginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(LoginIntent);
+        finish();
 
     }
 
@@ -82,6 +120,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(item.getItemId()==R.id.main_settings_option){
+            Intent settings = new Intent(MainActivity.this,SettingsActivity.class);
+            startActivity(settings);
 
         }
 

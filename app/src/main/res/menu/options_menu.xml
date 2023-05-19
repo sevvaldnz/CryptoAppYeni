@@ -6,6 +6,8 @@
         android:title="Choose Contact"
         app:showAsAction="never"
         android:visible="true"
+        android:titleTextColor="#000000"
+
 
         >
 
