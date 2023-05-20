@@ -116,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
         super.onOptionsItemSelected(item);
 
         if(item.getItemId()==R.id.main_choose_contact_option){
+            Intent Findfriend= new Intent(MainActivity.this,FindfriendActivity.class);
+            startActivity(Findfriend);
+
 
         }
 
