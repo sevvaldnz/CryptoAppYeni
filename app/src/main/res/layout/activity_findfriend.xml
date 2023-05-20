@@ -15,14 +15,14 @@
 
     </include>
 
-    <view class="androidx.appcompat.app.AlertController$RecycleListView"
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/findfriend_recyler_list"
         android:layout_below="@+id/findfriend_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true">
-    </view>
+        android:layout_centerVertical="true" />
+
 
 
 </RelativeLayout>

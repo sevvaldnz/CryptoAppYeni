@@ -1,36 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="wrap_content">
 
-    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp">
 
-   <androidx.appcompat.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/users_profil_resmi"
+            android:src="@drawable/buttons"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
 
-      android:id="@+id/users_profil_resmi"
-       android:src="@drawable/buttons"
-       android:layout_width="80dp"
-       android:layout_height="80dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"/>
-
-        <TextView
-             android:text="user name"
-                android:textSize="32dp"
-               android:textStyle="bold"
+            <TextView
+                android:id="@+id/usernameEditText"
+                android:text="Username"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-            android:textAlignment="textStart"
-            android:layout_margin="5dp"
-/>
+                android:textAlignment="textStart"
+                android:layout_margin="5dp" />
+
+            <TextView
+                android:id="@+id/aboutEditText"
+                android:text="About"
+                android:textSize="14sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:layout_margin="5dp" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>
+
