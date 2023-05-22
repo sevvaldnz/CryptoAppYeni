@@ -1,31 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatsFragment">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/sohbetlerListesi"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/chatsTitle"
-        android:layout_marginTop="26dp" />
-
-    <TextView
-        android:id="@+id/chatsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="0sp"
-        android:textStyle="bold"
-        android:paddingLeft="120dp"
-        android:text="" />
+    android:background="@android:color/darker_gray"
+    tools:context=".ChatActivity">
 
     <LinearLayout
         android:padding="10dp"
-        android:layout_below="@+id/chatsTitle"
-        android:background="#808080"
+        android:background="@color/design_default_color_primary"
         android:id="@+id/yukari_bar"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -34,7 +19,6 @@
         <LinearLayout
             android:layout_gravity="center_vertical"
             android:orientation="vertical"
-            android:paddingLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -45,16 +29,18 @@
                 android:textColor="@android:color/background_light"
                 android:text="Username"
                 android:layout_width="270dp"
-                android:layout_height="40dp" />
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/kullanici_durumu_gosterme_chat_activity"
                 android:text="Last seen"
                 android:textColor="@android:color/background_light"
                 android:layout_width="270dp"
-                android:layout_height="30dp" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
+
+
 
 

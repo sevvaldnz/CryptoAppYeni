@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +63,7 @@ public class FindfriendActivity extends AppCompatActivity {
 
         FirebaseRecyclerAdapter<Users, FindfriendViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Users, FindfriendViewHolder>(options) {
+
                     @NonNull
                     @Override
                     public FindfriendViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -79,9 +81,10 @@ public class FindfriendActivity extends AppCompatActivity {
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
                                 String tıklanan_kullanıcı_Id_göster = getRef(position).getKey();
-                                // Perform your action here
+                                Intent profileIntent = new Intent(FindfriendActivity.this, ProfileActivity.class);
+                                profileIntent.putExtra("user_id", tıklanan_kullanıcı_Id_göster);
+                                startActivity(profileIntent);
                             }
                         });
                     }

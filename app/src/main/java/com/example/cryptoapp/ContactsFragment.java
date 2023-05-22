@@ -2,11 +2,26 @@ package com.example.cryptoapp;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import Model.Users;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +29,12 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class ContactsFragment extends Fragment {
+
+    private View ContactsView;
+    private RecyclerView ContactsList;
+    private DatabaseReference chatsPath, usersPath;
+    private FirebaseAuth mAuth;
+    private String aktifKullaniciId;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +80,74 @@ public class ContactsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contacts, container, false);
+        ContactsView= inflater.inflate(R.layout.fragment_contacts, container, false);
+        ContactsList=ContactsView.findViewById(R.id.contacts_list);
+        ContactsList.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        mAuth= FirebaseAuth.getInstance();
+
+        aktifKullaniciId=mAuth.getCurrentUser().getUid();
+
+        chatsPath= FirebaseDatabase.getInstance().getReference().child("Chats").child(aktifKullaniciId);
+        usersPath = FirebaseDatabase.getInstance().getReference().child("Users");
+
+
+        return ContactsView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        FirebaseRecyclerOptions secenekler= new FirebaseRecyclerOptions.Builder<Users>()
+                .setQuery(chatsPath,Users.class)
+                .build();
+
+        FirebaseRecyclerAdapter<Users,KisilerViewHolder>adapter = new FirebaseRecyclerAdapter<Users, KisilerViewHolder>(secenekler) {
+            @Override
+            protected void onBindViewHolder(@NonNull KisilerViewHolder holder, int position, @NonNull Users model) {
+                String tiklananSatirKullaniciIdsi = getRef(position).getKey();
+
+                usersPath.child(tiklananSatirKullaniciIdsi).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.hasChild("about")){
+                            String Username = snapshot.child("username").getValue().toString();
+                            String About = snapshot.child("about").getValue().toString();
+
+                            holder.Username.setText(Username);
+                            holder.About.setText(About);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+            }
+
+            @NonNull
+            @Override
+            public KisilerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.show_user_layout,parent,false);
+                KisilerViewHolder viewHolder = new KisilerViewHolder(view);
+                        return viewHolder;
+            }
+        };
+        ContactsList.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        adapter.startListening();
+    }
+    public static class KisilerViewHolder extends RecyclerView.ViewHolder{
+
+        TextView Username, About;
+        public KisilerViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            Username=itemView.findViewById(R.id.usernameEditText);
+            About=itemView.findViewById(R.id.aboutEditText);
+        }
     }
 }

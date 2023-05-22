@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/users_profil_resmi"
+        android:src="@drawable/buttons"
+        android:layout_width="80dp"
+        android:layout_height="80dp"/>
+
+    <TextView
+        android:id="@+id/usernameTextView"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="110dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:text="Username" />
+
+
+    <TextView
+        android:id="@+id/aboutTextView"
+        android:layout_margin="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="30sp"
+        tools:text="About" />
+
+    <Button
+        android:id="@+id/sendMessageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/design_default_color_primary"
+        android:text="Send Message Request"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/acceptMessageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@color/design_default_color_primary"
+        android:text="Cancel Message Request"
+        android:textColor="@android:color/white"
+        android:visibility="invisible"/>
+
+</LinearLayout>
+
