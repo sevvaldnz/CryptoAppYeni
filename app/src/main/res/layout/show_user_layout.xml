@@ -39,6 +39,44 @@
                 android:textAlignment="textStart"
                 android:layout_margin="5dp" />
 
+
+
+    </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+
+                android:id="@+id/chat_kabul_buttonu"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="Kabul"
+                android:textAllCaps="false"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/background_light"
+                android:background="@android:color/holo_green_light"
+                android:visibility="invisible"
+                />
+            <Button
+
+                android:id="@+id/chat_iptal_buttonu"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="İptal"
+                android:layout_marginStart="15dp"
+                android:textAllCaps="false"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/background_light"
+                android:background="@android:color/holo_red_dark"
+                android:visibility="invisible"
+                />
+
+
+
         </LinearLayout>
     </LinearLayout>
 
