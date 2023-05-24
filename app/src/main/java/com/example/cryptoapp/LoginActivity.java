@@ -19,6 +19,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -28,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private FirebaseAuth mAuth;
+    private DatabaseReference userPath;
 
     ProgressDialog signinDialog;
 
@@ -48,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         signinDialog= new ProgressDialog(this);
 
         mAuth=FirebaseAuth.getInstance();
+        userPath= FirebaseDatabase.getInstance().getReference().child("Users");
 
 
 
@@ -86,26 +91,53 @@ public class LoginActivity extends AppCompatActivity {
             signinDialog.setCanceledOnTouchOutside(true);
             signinDialog.show();
 
-            mAuth.signInWithEmailAndPassword(email,password)
+
+
+            mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                Intent mainPage = new Intent(LoginActivity.this,MainActivity.class);
-                                mainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(mainPage);
-                                finish();
-                                Toast.makeText(LoginActivity.this, "Successfully signed in", Toast.LENGTH_SHORT).show();
-                                signinDialog.dismiss();
-                            }
-                            else{
-                                String message = task.getException().toString();
-                                Toast.makeText(LoginActivity.this, "Error: +message +Try again", Toast.LENGTH_SHORT).show();
-                                signinDialog.dismiss();
-                            }
+                            if (task.isSuccessful()) {
+                                String aktifKullaniciId = mAuth.getCurrentUser().getUid();
 
+                                FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<String> task) {
+                                        if (task.isSuccessful()) {
+                                            String deviceToken = task.getResult();
+
+                                            userPath.child(aktifKullaniciId).child("device_token").setValue(deviceToken)
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                Intent mainPage = new Intent(LoginActivity.this, MainActivity.class);
+                                                                mainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                                startActivity(mainPage);
+                                                                finish();
+                                                                Toast.makeText(LoginActivity.this, "Successfully signed in", Toast.LENGTH_SHORT).show();
+                                                                signinDialog.dismiss();
+                                                            }
+                                                        }
+                                                    });
+                                        } else {
+                                            // Handle the error
+                                            // You can display a toast or perform any other error handling logic
+                                            Toast.makeText(LoginActivity.this, "Error getting device token", Toast.LENGTH_SHORT).show();
+
+                                            // Dismiss the progress dialog
+                                            signinDialog.dismiss();
+                                        }
+                                    }
+                                });
+                            } else {
+                                String message = task.getException().toString();
+                                Toast.makeText(LoginActivity.this, "Error: " + message + " Try again", Toast.LENGTH_SHORT).show();
+                                signinDialog.dismiss();
+                            }
                         }
                     });
+
 
         }
     }

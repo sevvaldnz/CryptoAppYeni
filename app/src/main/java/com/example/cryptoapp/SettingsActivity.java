@@ -2,6 +2,7 @@ package com.example.cryptoapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference dataPath;
     private String mevcutKullaniciId;
+    private Toolbar settingsToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,12 @@ public class SettingsActivity extends AppCompatActivity {
         updateButton=findViewById(R.id.updateButton);
         usernameEditText=findViewById(R.id.usernameEditText);
         aboutEditText=findViewById(R.id.aboutEditText);
+        settingsToolbar=findViewById(R.id.settings_toolbar);
+
+        setSupportActionBar(settingsToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Account Settings");
 
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override

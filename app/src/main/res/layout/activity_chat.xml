@@ -8,16 +8,27 @@
     android:background="@android:color/darker_gray"
     tools:context=".ChatActivity">
 
+    <include
+        layout="@layout/app_bar_layout"
+        android:id="@+id/chat_toolbar" />
+
+
     <LinearLayout
         android:padding="10dp"
-        android:background="@color/design_default_color_primary"
+        android:background="@color/purple_200"
         android:id="@+id/yukari_bar"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/sohbetsayfasina_gonderme_resmi"
+            android:layout_marginRight="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@color/design_default_color_primary"/>
+
         <LinearLayout
-            android:layout_gravity="center_vertical"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -28,19 +39,45 @@
                 android:textStyle="bold"
                 android:textColor="@android:color/background_light"
                 android:text="Username"
-                android:layout_width="270dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <TextView
-                android:id="@+id/kullanici_durumu_gosterme_chat_activity"
-                android:text="Last seen"
-                android:textColor="@android:color/background_light"
-                android:layout_width="270dp"
-                android:layout_height="wrap_content" />
+
         </LinearLayout>
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/yukari_bar"
+        android:id="@+id/kullanicilarin_ozel_mesajlarinin_listesi"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/chat_linear_layout" />
+
+    <LinearLayout
+        android:id="@+id/chat_linear_layout"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/background_light"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <EditText
+            android:id="@+id/girilen_mesaj"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Type your message..."
+            android:textSize="16sp"
+            android:padding="14sp"
+            android:maxLines="5" />
+
+        <Button
+            android:id="@+id/sendButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send"
+            android:textColor="#FFFFFF"
+            android:background="#1976D2" />
+    </LinearLayout>
 </RelativeLayout>
-
-
-
-

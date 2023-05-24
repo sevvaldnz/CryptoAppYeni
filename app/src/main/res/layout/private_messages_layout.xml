@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/mesaj_profil_resmi"
+        android:layout_marginTop="10dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@color/design_default_color_primary"/>
+
+    <TextView
+        android:id="@+id/alici_mesaj_metni"
+        android:padding="8dp"
+        android:text="recipient messages here "
+        android:background="@drawable/recipient_messages_layout"
+        android:layout_toEndOf="@+id/mesaj_profil_resmi"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:textSize="13sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"/>
+
+    <ImageView
+        android:id="@+id/mesaj_gonderen_image_view"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="18dp"
+        android:scaleType="centerCrop"
+        />
+
+    <ImageView
+        android:id="@+id/mesaj_alan_image_view"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/gonderen_mesaj_metni"
+        android:padding="8dp"
+        android:text="sender messages here"
+        android:background="@drawable/sender_messages_layout"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="@+id/alici_mesaj_metni"
+        android:textColor="@android:color/black"
+        android:textSize="13sp"
+        android:textStyle="bold"/>
+
+</RelativeLayout>
+

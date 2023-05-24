@@ -25,8 +25,8 @@ public class TabAccessAdapter extends FragmentPagerAdapter {
 
 
             case 2:
-                TaleplerFragment taleplerFragment = new TaleplerFragment();
-                return taleplerFragment;
+                RequestsFragment requestsFragment = new RequestsFragment();
+                return requestsFragment;
 
             default:
                 return null;
@@ -54,7 +54,7 @@ public class TabAccessAdapter extends FragmentPagerAdapter {
                 return "Contacts";
 
             case 2:
-                return "Talepler";
+                return "Requests";
             default:
                 return null;
         }

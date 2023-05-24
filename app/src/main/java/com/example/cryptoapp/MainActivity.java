@@ -21,6 +21,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser mevcutKullanici;
     private FirebaseAuth mAuth;
     private DatabaseReference UsersReference;
+    private String aktifKullaniciId;
 
 
     @Override
@@ -53,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
         mevcutKullanici=mAuth.getCurrentUser();
         UsersReference= FirebaseDatabase.getInstance().getReference();
+
+        aktifKullaniciId= mAuth.getCurrentUser().getUid();
     }
 
     @Override
@@ -64,7 +71,26 @@ public class MainActivity extends AppCompatActivity {
             KullaniciyiLoginActivityeGonder();
         }
         else{
+            kullaniciDurumuGuncelle("online");
             KullanicininVarliginiDogrula();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if(mevcutKullanici != null){
+            kullaniciDurumuGuncelle("offline");
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if(mevcutKullanici != null){
+            kullaniciDurumuGuncelle("offline");
         }
     }
 
@@ -134,5 +160,29 @@ public class MainActivity extends AppCompatActivity {
             startActivity(login);
         }
         return true;
+    }
+
+    private void kullaniciDurumuGuncelle(String durum){
+        String kaydedilenAktifZaman, kaydedilenAktifTarih;
+
+        Calendar calendar = Calendar.getInstance();
+
+        SimpleDateFormat aktifTarih = new SimpleDateFormat("MM dd,yyyy");
+        kaydedilenAktifTarih = aktifTarih.format(calendar.getTime());
+
+        SimpleDateFormat aktifZaman = new SimpleDateFormat("hh:mm a");
+        kaydedilenAktifZaman = aktifZaman.format(calendar.getTime());
+
+        HashMap<String,Object> cevrimiciDurumu = new HashMap<>();
+        cevrimiciDurumu.put("time",kaydedilenAktifZaman);
+        cevrimiciDurumu.put("date",kaydedilenAktifTarih);
+        cevrimiciDurumu.put("status",durum);
+
+        UsersReference.child("Users").child(aktifKullaniciId).child("User_Status").updateChildren(cevrimiciDurumu);
+
+
+
+
+
     }
 }

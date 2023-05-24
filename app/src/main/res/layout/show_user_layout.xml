@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/topLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -39,46 +39,45 @@
                 android:textAlignment="textStart"
                 android:layout_margin="5dp" />
 
-
-
-    </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-
-                android:id="@+id/chat_kabul_buttonu"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:text="Kabul"
-                android:textAllCaps="false"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/background_light"
-                android:background="@android:color/holo_green_light"
-                android:visibility="invisible"
-                />
-            <Button
-
-                android:id="@+id/chat_iptal_buttonu"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:text="İptal"
-                android:layout_marginStart="15dp"
-                android:textAllCaps="false"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/background_light"
-                android:background="@android:color/holo_red_dark"
-                android:visibility="invisible"
-                />
-
-
-
         </LinearLayout>
+
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topLayout"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:id="@+id/chat_kabul_buttonu"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="Accept"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:background="#808000"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/chat_iptal_buttonu"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="Decline"
+            android:layout_marginStart="15dp"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:background="#8B0000"
+            android:visibility="invisible"
+            android:layout_marginLeft="10dp" />
+
+    </LinearLayout>
 </RelativeLayout>
+
 

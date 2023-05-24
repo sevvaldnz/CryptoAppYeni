@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 
 
 public class ProfileActivity extends AppCompatActivity {
@@ -27,7 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
     private String alinanKullanıcıId, aktifKullaniciId, Aktif_Durum;
     private TextView Username, About;
     private Button SendMessage, AcceptMessage;
-    private DatabaseReference userPath, chatRequestPath, chatsPath;
+    private DatabaseReference userPath, chatRequestPath, chatsPath, notifyPath;
     private FirebaseAuth mAuth;
 
     @Override
@@ -49,6 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
         userPath = FirebaseDatabase.getInstance().getReference().child("Users");
         chatRequestPath = FirebaseDatabase.getInstance().getReference().child("Message Request");
         chatsPath = FirebaseDatabase.getInstance().getReference().child("Chats");
+        notifyPath = FirebaseDatabase.getInstance().getReference().child("Notifications");
         mAuth = FirebaseAuth.getInstance();
         aktifKullaniciId = mAuth.getCurrentUser().getUid();
 
@@ -254,9 +256,22 @@ public class ProfileActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                SendMessage.setEnabled(true);
-                                                Aktif_Durum = "Request sent";
-                                                SendMessage.setText("Cancel Message Request");
+                                                HashMap <String,String> chatBildirim= new HashMap<>();
+                                                chatBildirim.put("from",aktifKullaniciId);
+                                                chatBildirim.put("type","request");
+
+                                                notifyPath.child(alinanKullanıcıId).push().setValue(chatBildirim).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if(task.isSuccessful()){
+                                                            SendMessage.setEnabled(true);
+                                                            Aktif_Durum = "Request sent";
+                                                            SendMessage.setText("Cancel Message Request");
+                                                        }
+                                                    }
+                                                });
+
+
                                             }
                                         }
                                     });
