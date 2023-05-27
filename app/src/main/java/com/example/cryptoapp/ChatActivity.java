@@ -27,10 +27,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 
 import Model.Messages;
 
@@ -47,13 +51,14 @@ public class ChatActivity extends AppCompatActivity {
     private LinearLayoutManager LinearLayoutManager;
     private MessageAdapter MessageAdapter;
     private RecyclerView kullaniciMesajlariListesi;
+    private static final String AES_ALGORITHM = "AES";
+    private static final String AES_KEY = "mysecretkey12345";
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
-
 
         IdMesajAlici = getIntent().getExtras().get("kullanici_id_ziyaret").toString();
         AdMesajAlici = getIntent().getExtras().get("kullanici_adi_ziyaret").toString();
@@ -87,10 +92,9 @@ public class ChatActivity extends AppCompatActivity {
                 MesajGonder();
             }
         });
-
-
     }
-    private void SonGorulmeyiGoster(){
+
+    private void SonGorulmeyiGoster() {
         userPath.child("Users").child(IdMesajGonderen).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -110,18 +114,13 @@ public class ChatActivity extends AppCompatActivity {
                 } else {
                     lastseen.setText("offline");
                 }
-
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
-
     }
-
 
     @Override
     protected void onStart() {
@@ -135,27 +134,22 @@ public class ChatActivity extends AppCompatActivity {
                         messagesList.add(messages);
                         MessageAdapter.notifyDataSetChanged();
                         kullaniciMesajlariListesi.smoothScrollToPosition(kullaniciMesajlariListesi.getAdapter().getItemCount());
-
                     }
 
                     @Override
                     public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
                     }
 
                     @Override
                     public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
                     }
 
                     @Override
                     public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
                     }
                 });
     }
@@ -174,9 +168,11 @@ public class ChatActivity extends AppCompatActivity {
 
             String mesajEklemeId = userMessageKeyPath.getKey();
 
+            String sifreliMesaj = encryptMessage(mesajMetni, AES_KEY);
+
             Map mesajMetniGovdesi= new HashMap();
             mesajMetniGovdesi.put("from",IdMesajGonderen);
-            mesajMetniGovdesi.put("message",mesajMetni);
+            mesajMetniGovdesi.put("message",sifreliMesaj);
             mesajMetniGovdesi.put("type","text");
 
             Map MesajGovdesiDetaylari = new HashMap<>();
@@ -193,10 +189,29 @@ public class ChatActivity extends AppCompatActivity {
                         Toast.makeText(ChatActivity.this, "Message could not be Sent!", Toast.LENGTH_SHORT).show();
                     }
                     enterMessage.setText("");
-
                 }
             });
+        }
+    }
 
+    private String encryptMessage(String message, String secretKey) {
+        try {
+            Key aesKey = new SecretKeySpec(secretKey.getBytes(), AES_ALGORITHM);
+            Cipher cipher = Cipher.getInstance(AES_ALGORITHM);
+            cipher.init(Cipher.ENCRYPT_MODE, aesKey);
+            byte[] encryptedBytes = cipher.doFinal(message.getBytes());
+            return new String(encryptedBytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
+
+
+
+
+
+
+
+

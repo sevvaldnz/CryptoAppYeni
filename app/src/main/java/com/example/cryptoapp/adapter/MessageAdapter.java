@@ -26,6 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 
 import java.util.List;
 
@@ -43,6 +45,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.Mesajlar
     public MessageAdapter(List<Messages> kullaniciMesajlariListesi) {
         this.kullaniciMesajlariListesi = kullaniciMesajlariListesi;
     }
+
+
 
     //ViewHolder
     public class MesajlarViewHolder extends RecyclerView.ViewHolder {
