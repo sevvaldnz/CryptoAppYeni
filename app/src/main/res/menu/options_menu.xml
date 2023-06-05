@@ -8,6 +8,7 @@
         app:showAsAction="never"
         android:visible="true"
         android:titleTextColor="#000000"
+        android:color="#000000"
         android:background="#000080"
         android:textStyle="bold"/>
 
@@ -16,15 +17,17 @@
         android:title="Settings"
         app:showAsAction="never"
         android:visible="true"
-        android:titleTextColor="#FFFFFF"
-        android:background="#000080" />
+        android:titleTextColor="#000000"
+        android:background="#000080"
+        android:color="#000000"/>
 
     <item
         android:id="@+id/main_sign_out_option"
         android:title="Sign Out"
         app:showAsAction="never"
         android:visible="true"
-        android:titleTextColor="#FFFFFF"
+        android:titleTextColor="#000000"
+        android:color="#000000"
         android:background="#000080" />
 
 </menu>

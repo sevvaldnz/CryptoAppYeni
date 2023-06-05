@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Button loginbutton;
     private EditText loginmail,loginpassword;
-    private TextView createnewaccount, forgotpassword;
+    private TextView createnewaccount;
 
 
     private FirebaseAuth mAuth;
@@ -47,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
         loginpassword=findViewById(R.id.login_password);
 
         createnewaccount=findViewById(R.id.create_newaccount);
-        forgotpassword=findViewById(R.id.login_forgotpassword);
 
         signinDialog= new ProgressDialog(this);
 

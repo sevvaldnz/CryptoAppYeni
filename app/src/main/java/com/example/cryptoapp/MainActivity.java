@@ -39,10 +39,31 @@ public class MainActivity extends AppCompatActivity {
     private String aktifKullaniciId;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Edit for launching error
+        // Inside onCreate() method in MainActivity
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser != null) {
+            // currentUser is non-null, safe to use.
+            String currentUserId = currentUser.getUid();
+            // Use the user ID...
+
+        } else {
+            // currentUser is null.
+            // Redirect to the login activity or show a message.
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
 
         mToolbar=findViewById(R.id.main_page_tool_bar);
         setSupportActionBar(mToolbar);

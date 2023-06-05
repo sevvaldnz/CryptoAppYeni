@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +22,7 @@ import com.example.cryptoapp.adapter.MessageAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,6 +40,8 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
 import Model.Messages;
+import android.util.Base64;
+
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -73,7 +78,39 @@ public class ChatActivity extends AppCompatActivity {
         kullaniciMesajlariListesi.setLayoutManager(LinearLayoutManager);
         kullaniciMesajlariListesi.setAdapter(MessageAdapter);
 
+
         mAuth= FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if(currentUser != null){
+            IdMesajGonderen = currentUser.getUid();
+            // Rest of your code
+
+            messagePath= FirebaseDatabase.getInstance().getReference();
+            userPath= FirebaseDatabase.getInstance().getReference();
+
+            ChatToolbar = findViewById(R.id.chat_toolbar);
+            setSupportActionBar(ChatToolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+            username.setText(AdMesajAlici);
+
+            SendMessageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    MesajGonder();
+                }
+            });
+
+        } else {
+            // Redirect to login page or show a message to the user
+            Intent intent = new Intent(ChatActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+//...
+
         messagePath= FirebaseDatabase.getInstance().getReference();
         userPath= FirebaseDatabase.getInstance().getReference();
 
@@ -131,10 +168,17 @@ public class ChatActivity extends AppCompatActivity {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                         Messages messages = snapshot.getValue(Messages.class);
-                        messagesList.add(messages);
-                        MessageAdapter.notifyDataSetChanged();
-                        kullaniciMesajlariListesi.smoothScrollToPosition(kullaniciMesajlariListesi.getAdapter().getItemCount());
+                        if (messages != null) {
+                            String decryptedMessage = decryptMessage(messages.getMessage(), AES_KEY);
+                            if (decryptedMessage != null) {
+                                messages.setMessage(decryptedMessage);
+                            }
+                            messagesList.add(messages);
+                            MessageAdapter.notifyDataSetChanged();
+                            kullaniciMesajlariListesi.smoothScrollToPosition(kullaniciMesajlariListesi.getAdapter().getItemCount());
+                        }
                     }
+
 
                     @Override
                     public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -194,19 +238,43 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
+
+
+// ...
+
     private String encryptMessage(String message, String secretKey) {
         try {
             Key aesKey = new SecretKeySpec(secretKey.getBytes(), AES_ALGORITHM);
             Cipher cipher = Cipher.getInstance(AES_ALGORITHM);
             cipher.init(Cipher.ENCRYPT_MODE, aesKey);
             byte[] encryptedBytes = cipher.doFinal(message.getBytes());
-            return new String(encryptedBytes);
+            // Encode encrypted data into Base64
+            return Base64.encodeToString(encryptedBytes, Base64.DEFAULT);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
+
+    private String decryptMessage(String encryptedMessage, String secretKey) {
+        try {
+            Key aesKey = new SecretKeySpec(secretKey.getBytes(), AES_ALGORITHM);
+            Cipher cipher = Cipher.getInstance(AES_ALGORITHM);
+            cipher.init(Cipher.DECRYPT_MODE, aesKey);
+            // Decode Base64 encoded data back into bytes
+            byte[] decodedBytes = Base64.decode(encryptedMessage, Base64.DEFAULT);
+            byte[] decryptedBytes = cipher.doFinal(decodedBytes);
+            return new String(decryptedBytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+// ...
+
 }
+
 
 
 
