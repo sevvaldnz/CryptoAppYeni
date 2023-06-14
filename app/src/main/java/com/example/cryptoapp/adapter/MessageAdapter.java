@@ -108,14 +108,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.Mesajlar
         mesajlarViewHolder.gonderenMesajMetni.setVisibility(View.GONE);
         mesajlarViewHolder.gonderenImageView.setVisibility(View.GONE);
 
-        if (kimdenMesajTuru.equals("text")) {
-            if (kimdenKullaniciId.equals(mesajGonderenId)) {
+        if ("text".equals(kimdenMesajTuru)) {
+            if (kimdenKullaniciId != null && mesajGonderenId != null && kimdenKullaniciId.equals(mesajGonderenId)) {
                 mesajlarViewHolder.gonderenImageView.setVisibility(View.INVISIBLE);
                 mesajlarViewHolder.gonderenMesajMetni.setVisibility(View.VISIBLE);
                 mesajlarViewHolder.gonderenMesajMetni.setBackgroundResource(R.drawable.sender_messages_layout);
                 mesajlarViewHolder.gonderenMesajMetni.setTextColor(Color.BLACK);
                 mesajlarViewHolder.gonderenMesajMetni.setText(mesajlar.getMessage()); // Mesaj metnini ayarla
-
             } else {
                 mesajlarViewHolder.gonderenImageView.setVisibility(View.VISIBLE);
                 mesajlarViewHolder.aliciMesajMetni.setVisibility(View.VISIBLE);
@@ -124,6 +123,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.Mesajlar
                 mesajlarViewHolder.aliciMesajMetni.setText(mesajlar.getMessage()); // Mesaj metnini ayarla
             }
         }
+
     }
 
         @Override

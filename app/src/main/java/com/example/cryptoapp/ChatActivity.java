@@ -59,6 +59,7 @@ public class ChatActivity extends AppCompatActivity {
     private static final String AES_ALGORITHM = "AES";
     private static final String AES_KEY = "mysecretkey12345";
 
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
